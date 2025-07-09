@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Health Input Results</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <h1>Agribusiness Health Inputs Received</h1>
+
+    <h3>Input Data:</h3>
+    <table class="table table-bordered table-striped">
+        <tbody>
+            {% for key, value in inputs_json.items() %}
+            <tr>
+                <th class="text-capitalize">{{ key.replace('_', ' ') }}</th>
+                <td>{{ value }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <h3>Scores:</h3>
+    <table class="table table-bordered w-50">
+        <tbody>
+            <tr>
+                <th>Financial Score</th>
+                <td>{{ scores.raw_scores.financial }} / 35 ({{ scores.financial_score }}%)</td>
+            </tr>
+            <tr>
+                <th>Risk Score</th>
+                <td>{{ scores.raw_scores.risk }} / 30 ({{ scores.risk_score }}%)</td>
+            </tr>
+            <tr>
+                <th>Productivity Score</th>
+                <td>{{ scores.raw_scores.productivity }} / 20 ({{ scores.productivity_score }}%)</td>
+            </tr>
+            <tr class="table-primary">
+                <th>Total Score</th>
+                <td><strong>{{ scores.raw_scores.total }} / 85 ({{ scores.total_score }}%)</strong></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h3>Detailed Metrics:</h3>
+    <table class="table table-bordered w-75">
+        <tbody>
+            {% for key, value in scores.metrics.items() %}
+            <tr>
+                <th class="text-capitalize">{{ key.replace('_', ' ') }}</th>
+                <td>{{ "%.2f"|format(value) }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="/" class="btn btn-secondary mt-3">← Back to Form</a>
+</div>
+</body>
+</html>

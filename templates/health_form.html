@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <title>Agribusiness Health Inputs</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+</head>
+<body class="bg-light">
+<div class="container py-5">
+    <h1 class="mb-4">Agribusiness Health Input Form</h1>
+    <form method="post" action="/submit" class="row g-3">
+        <!-- Financial Inputs -->
+        <h4>Financial Inputs</h4>
+        <div class="col-md-4">
+            <label for="total_revenue" class="form-label">Total Revenue</label>
+            <input type="number" step="0.01" name="total_revenue" id="total_revenue" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="total_expenses" class="form-label">Total Expenses</label>
+            <input type="number" step="0.01" name="total_expenses" id="total_expenses" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="current_assets" class="form-label">Current Assets</label>
+            <input type="number" step="0.01" name="current_assets" id="current_assets" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="total_assets" class="form-label">Total Assets</label>
+            <input type="number" step="0.01" name="total_assets" id="total_assets" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="current_liabilities" class="form-label">Current Liabilities</label>
+            <input type="number" step="0.01" name="current_liabilities" id="current_liabilities" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="long_term_liabilities" class="form-label">Long Term Liabilities</label>
+            <input type="number" step="0.01" name="long_term_liabilities" id="long_term_liabilities" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="owner_equity" class="form-label">Owner Equity</label>
+            <input type="number" step="0.01" name="owner_equity" id="owner_equity" class="form-control" required>
+        </div>
+
+        <!-- Farm Characteristics -->
+        <h4 class="mt-4">Farm Characteristics</h4>
+        <div class="col-md-6">
+            <label for="land_area_ha" class="form-label">Land Area (hectares)</label>
+            <input type="number" step="0.01" name="land_area_ha" id="land_area_ha" class="form-control" required>
+        </div>
+
+        <!-- Risk Profile -->
+        <h4 class="mt-4">Risk Profile</h4>
+        <div class="col-md-6">
+            <label for="commodity_dependence" class="form-label">Commodity Dependence (0-1)</label>
+            <input type="number" step="0.01" min="0" max="1" name="commodity_dependence" id="commodity_dependence" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="avg_rainfall_last_5_years" class="form-label">Average Rainfall (mm) (last 5 years)</label>
+            <input type="number" step="0.01" name="avg_rainfall_last_5_years" id="avg_rainfall_last_5_years" class="form-control" required>
+        </div>
+        <div class="col-md-6">
+            <label for="insurance_coverage" class="form-label">Insurance Coverage</label>
+            <select name="insurance_coverage" id="insurance_coverage" class="form-select" required>
+                <option value="true">Yes</option>
+                <option value="false" selected>No</option>
+            </select>
+        </div>
+        <div class="col-md-6">
+            <label for="irrigation_access" class="form-label">Irrigation Access</label>
+            <select name="irrigation_access" id="irrigation_access" class="form-select" required>
+                <option value="true">Yes</option>
+                <option value="false" selected>No</option>
+            </select>
+        </div>
+        <!-- Productivity Metrics -->
+        <h4 class="mt-4">Productivity Metrics</h4>
+        <div class="col-md-4">
+            <label for="yield_per_ha" class="form-label">Yield (kg) per Hectare</label>
+            <input type="number" step="0.01" name="yield_per_ha" id="yield_per_ha" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="labor_hours" class="form-label">Labor Hours</label>
+            <input type="number" step="0.01" name="labor_hours" id="labor_hours" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="machinery_costs" class="form-label">Machinery Costs</label>
+            <input type="number" step="0.01" name="machinery_costs" id="machinery_costs" class="form-control" required>
+        </div>
+        <div class="col-md-4">
+            <label for="fertilizer_costs" class="form-label">Fertilizer Costs</label>
+            <input type="number" step="0.01" name="fertilizer_costs" id="fertilizer_costs" class="form-control" required>
+        </div>
+
+        <div class="col-12 mt-4">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    </form>
+</div>
+</body>
+</html>
