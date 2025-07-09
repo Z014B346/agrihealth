@@ -1,10 +1,35 @@
 from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
-from logic import FarmHealthLogic
+from pydantic import BaseModel
+from logic import FarmHealthLogic  # Ensure this file and class exist
 
 app = FastAPI()
-templates = Jinja2Templates(directory="templates")  # Make sure this folder exists
+templates = Jinja2Templates(directory="templates")
+
+class HealthInputs(BaseModel):
+    total_revenue: float
+    total_expenses: float
+    current_assets: float
+    current_liabilities: float
+    long_term_liabilities: float
+    total_assets: float
+    owner_equity: float
+    land_area_ha: float
+    commodity_dependence: float
+    irrigation_access: bool
+    avg_rainfall_last_5_years: float
+    insurance_coverage: bool
+    yield_per_ha: float
+    labor_hours: float
+    machinery_costs: float
+    fertilizer_costs: float
+
+@app.post("/api/health")
+async def calculate_health(inputs: HealthInputs):
+    logic = FarmHealthLogic(inputs)
+    result = logic.compute_scores()
+    return result
 
 @app.get("/", response_class=HTMLResponse)
 async def form_get(request: Request):
@@ -30,28 +55,10 @@ async def form_post(
     machinery_costs: float = Form(...),
     fertilizer_costs: float = Form(...),
 ):
-    from pydantic import BaseModel
-
-    class HealthInputs(BaseModel):
-        total_revenue: float
-        total_expenses: float
-        current_assets: float
-        current_liabilities: float
-        long_term_liabilities: float
-        total_assets: float
-        owner_equity: float
-        land_area_ha: float
-        commodity_dependence: float
-        irrigation_access: bool
-        avg_rainfall_last_5_years: float
-        insurance_coverage: bool
-        yield_per_ha: float
-        labor_hours: float
-        machinery_costs: float
-        fertilizer_costs: float
-
     irrigation_access_bool = irrigation_access.lower() == "true"
     insurance_coverage_bool = insurance_coverage.lower() == "true"
+
+    net_income = total_revenue - total_expenses
 
     inputs = HealthInputs(
         total_revenue=total_revenue,
@@ -75,7 +82,14 @@ async def form_post(
     logic = FarmHealthLogic(inputs)
     scores = logic.compute_scores()
 
-    return templates.TemplateResponse("health_result.html", {
-        "request": request,
-        "scores": scores,
-    })
+    inputs_dict = inputs.dict()
+    inputs_dict["net_income"] = net_income
+
+    return templates.TemplateResponse(
+        "health_result.html",
+        {
+            "request": request,
+            "inputs_json": inputs_dict,
+            "scores": scores,
+        }
+    )
