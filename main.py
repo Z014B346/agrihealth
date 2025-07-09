@@ -2,7 +2,7 @@ from fastapi import FastAPI, Form, Request
 from fastapi.responses import HTMLResponse
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel
-from logic import FarmHealthLogic  # your logic.py file
+from logic import FarmHealthLogic
 
 app = FastAPI()
 templates = Jinja2Templates(directory="templates")
@@ -24,6 +24,12 @@ class HealthInputs(BaseModel):
     labor_hours: float
     machinery_costs: float
     fertilizer_costs: float
+
+@app.post("/api/health")
+async def calculate_health(inputs: HealthInputs):
+    logic = FarmHealthLogic(inputs)
+    result = logic.compute_scores()
+    return result
 
 @app.get("/", response_class=HTMLResponse)
 async def form_get(request: Request):
