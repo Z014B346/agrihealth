@@ -11,7 +11,7 @@ class FarmHealthLogic:
 
     def compute_metrics(self):
         liquidity = self.inputs.current_assets / (self.inputs.current_liabilities + 1e-5)
-        debt_asset = (self.inputs.current_liabilities + self.inputs.long_term_liabilities) / (self.inputs.total_assets + 1e-5)
+        debt_asset = (self.inputs.current_liabilities + self.inputs.long_term_liabilities) / (self.inputs.current_assets + self.inputs.total_assets + 1e-5)
         profit_margin = self.net_income / (self.inputs.total_revenue + 1e-5)
         rainfall_score = min(self.inputs.avg_rainfall_last_5_years / 100, 10)
         commodity_dependence_score = min(max((1 - self.inputs.commodity_dependence) * 10, 0), 10)
@@ -31,7 +31,7 @@ class FarmHealthLogic:
 
     def _financial_score(self):
         liquidity = self.inputs.current_assets / (self.inputs.current_liabilities + 1e-5)
-        debt_asset = (self.inputs.current_liabilities + self.inputs.long_term_liabilities) / (self.inputs.total_assets + 1e-5)
+        debt_asset = (self.inputs.current_liabilities + self.inputs.long_term_liabilities) / (self.inputs.current_assets + self.inputs.total_assets + 1e-5)
         profit_margin = self.net_income / (self.inputs.total_revenue + 1e-5)
 
         score = 0
